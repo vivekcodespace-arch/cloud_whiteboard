@@ -34,8 +34,8 @@ export default function Whiteboard() {
 
   const draw = (e: React.MouseEvent) => {
     if (!isDrawing) return;
-    // const ctx = canvasRef.current?.getContext('2d');
-    // if (!ctx) return;
+    const ctx = canvasRef.current?.getContext('2d');//edited
+    if (!ctx) return;//edited
     ctxRef.current?.lineTo(e.clientX, e.clientY);
     ctxRef.current?.stroke();
   };
