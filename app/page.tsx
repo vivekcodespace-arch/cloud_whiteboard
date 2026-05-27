@@ -19,7 +19,7 @@ export default function Whiteboard() {
     ctx.strokeStyle = 'black';
     ctxRef.current = ctx;
     
-    
+    // nice work man
     
   }, []);
 
