@@ -14,9 +14,9 @@ export default function Whiteboard() {
     const ctx = canvasRef.current?.getContext('2d');
     if(!ctx) return;
     
-    ctx.lineWidth = 3;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = 'black';
+    // ctx.lineWidth = 3;
+    // ctx.lineCap = 'round';
+    // ctx.strokeStyle = 'black';
     ctxRef.current = ctx;
     
     
