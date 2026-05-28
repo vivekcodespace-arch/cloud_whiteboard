@@ -19,8 +19,6 @@ export default function Whiteboard() {
     // ctx.strokeStyle = 'black';
     ctxRef.current = ctx;
     
-    
-    
   }, []);
 
   const startDrawing = (e: React.MouseEvent) => {
