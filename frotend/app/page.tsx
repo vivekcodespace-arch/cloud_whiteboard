@@ -14,9 +14,9 @@ export default function Whiteboard() {
     const ctx = canvasRef.current?.getContext('2d');
     if(!ctx) return;
     
-    ctx.lineWidth = 3;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = 'black';
+    // ctx.lineWidth = 3;
+    // ctx.lineCap = 'round';
+    // ctx.strokeStyle = 'black';
     ctxRef.current = ctx;
     
   }, []);
@@ -26,13 +26,14 @@ export default function Whiteboard() {
     // if () return;
     ctxRef.current?.beginPath(); //Creates new path, if this is removed old lines get conntected
     ctxRef.current?.moveTo(e.clientX, e.clientY);
+    //Linus trovalds is amzing.
     setIsDrawing(true);
   };
 
   const draw = (e: React.MouseEvent) => {
     if (!isDrawing) return;
-    // const ctx = canvasRef.current?.getContext('2d');
-    // if (!ctx) return;
+    const ctx = canvasRef.current?.getContext('2d');
+    if (!ctx) return;
     ctxRef.current?.lineTo(e.clientX, e.clientY);
     ctxRef.current?.stroke();
   };
