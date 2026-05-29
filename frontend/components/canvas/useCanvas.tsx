@@ -26,6 +26,7 @@ export default function Canvas() {
     let isPanning = false
     let panStartX = 0
     let panStartY = 0
+    let scale = 1    
 
     let isDrawing = false
     let strokes: {x: number, y: number}[][] = []
@@ -52,7 +53,7 @@ export default function Canvas() {
       ctx.save()
 
       // 3. apply pan
-      ctx.setTransform(1, 0, 0, 1, panX, panY)
+      ctx.setTransform(scale, 0, 0, scale, panX, panY)
 
       // 4. draw all saved strokes
       for (const stroke of strokes) {
@@ -79,11 +80,33 @@ export default function Canvas() {
       if (e.button === 0) {
         isDrawing = true
         currentStroke = []
-        const worldX = e.clientX - panX
-        const worldY = e.clientY - panY
+        const worldX = (e.clientX - panX) / scale
+        const worldY = (e.clientY - panY) / scale
         currentStroke.push({ x: worldX, y: worldY })
       }
     })
+
+    canvas.addEventListener('wheel', (e) => {
+    e.preventDefault()
+
+    const worldX = (e.clientX - panX) / scale
+    const worldY = (e.clientY - panY) / scale
+
+    // clamp deltaY to a max of 1 — stops trackpad from firing huge values
+    const delta = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 1)
+
+    const zoomFactor = 1 - delta * 0.1
+
+    scale = scale * zoomFactor
+    scale = Math.min(Math.max(scale, 0.1), 20)
+
+    console.log("scale:", scale, "delta:", delta)
+
+    panX = e.clientX - worldX * scale
+    panY = e.clientY - worldY * scale
+
+    redraw()
+    }, { passive: false })
 
     canvas.addEventListener('mousemove', (e) => {
       if (isPanning) {
@@ -99,8 +122,9 @@ export default function Canvas() {
 
       if (!isDrawing) return
 
-      const worldX = e.clientX - panX
-      const worldY = e.clientY - panY
+      const worldX = (e.clientX - panX) / scale
+      const worldY = (e.clientY - panY) / scale
+
       currentStroke.push({ x: worldX, y: worldY })
 
       // one single redraw handles everything
