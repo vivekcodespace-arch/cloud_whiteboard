@@ -1,0 +1,26 @@
+[33mfabf4d5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mvg[m[33m, [m[1;31morigin/vg[m[33m)[m HEAD@{0}: reset: moving to origin/vg
+[33m0b52ac3[m HEAD@{1}: commit: added final code
+[33mfabf4d5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mvg[m[33m, [m[1;31morigin/vg[m[33m)[m HEAD@{2}: commit: added zoom feature in canvas also
+[33ma7118ce[m HEAD@{3}: commit: canvas done
+[33m637fc55[m HEAD@{4}: pull origin sharma: Merge made by the 'ort' strategy.
+[33m76bad38[m HEAD@{5}: commit: panel code added
+[33maea2bbb[m HEAD@{6}: checkout: moving from main to vg
+[33m2d69ef5[m[33m ([m[1;32mmain[m[33m)[m HEAD@{7}: checkout: moving from vg to main
+[33maea2bbb[m HEAD@{8}: commit: resize issue resolved
+[33m0c90ee6[m HEAD@{9}: pull --rebase origin vg (finish): returning to refs/heads/vg
+[33m0c90ee6[m HEAD@{10}: pull --rebase origin vg (pick): resize and infinte scroll resolved
+[33m7cf6048[m HEAD@{11}: pull --rebase origin vg (start): checkout 7cf6048733003f1febfca26fc7a66b8fe4f3a1ee
+[33m7b63268[m HEAD@{12}: reset: moving to HEAD
+[33m7b63268[m HEAD@{13}: reset: moving to HEAD
+[33m7b63268[m HEAD@{14}: commit: resize and infinte scroll resolved
+[33m2f5cafa[m HEAD@{15}: commit: dev files removed
+[33m3078234[m HEAD@{16}: rebase (finish): returning to refs/heads/vg
+[33m3078234[m HEAD@{17}: rebase (pick): updated git ignore
+[33m6d6fd5e[m HEAD@{18}: commit: folder struc changed
+[33m1febd20[m HEAD@{19}: pull origin vg --rebase (start): checkout 1febd20730d466fb4b8e66cdde985ad487138248
+[33md4acd00[m HEAD@{20}: commit: updated git ignore
+[33me6d1452[m HEAD@{21}: commit: folder struc chaanged
+[33m2d69ef5[m[33m ([m[1;32mmain[m[33m)[m HEAD@{22}: reset: moving to main
+[33m1febd20[m HEAD@{23}: commit: try edit
+[33m2d69ef5[m[33m ([m[1;32mmain[m[33m)[m HEAD@{24}: checkout: moving from main to vg
+[33m2d69ef5[m[33m ([m[1;32mmain[m[33m)[m HEAD@{25}: clone: from https://github.com/vivekcodespace-arch/cloud_Whiteboard.git
