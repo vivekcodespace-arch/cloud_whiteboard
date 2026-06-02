@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+
+  redis:
+    image: redis:7-alpine        # official Redis image, no Dockerfile needed
+    ports:
+      - "6379:6379"              # host:container
+    volumes:
+      - redis_data:/data         # persist data even if container restarts
+    command: redis-server --appendonly yes   # appendonly = save to disk
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend             # build using backend/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - REDIS_URL=redis://redis:6379   # "redis" = the service name above, not localhost
+    depends_on:
+      redis:
+        condition: service_healthy                  # wait for redis to start first
+
+  frontend:
+    build: ./frontend            # build using frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_SOCKET_URL=http://backend:3001   # "backend" = service name
+    depends_on:
+      - backend                  # wait for backend to start first
+
+volumes:
+  redis_data:                    # named volume — survives container restarts

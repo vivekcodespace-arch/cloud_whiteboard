@@ -1,4 +1,5 @@
-FROM node:20
+# use node 20 as base image
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -8,8 +9,8 @@ RUN npm install
 
 COPY . .
 
+# build Next.js for production
 RUN npm run build
 
-EXPOSE 3000
-
+# start Next.js
 CMD ["npm", "start"]
