@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   console.log('a user connected:', socket.id)
 
-  socket.on('join-room', async (roomId, name: string) => {
+  socket.on('join-room', async (roomId, name: string, userId: string) => {
     socket.join(roomId)
     console.log(`${socket.id} joined ${roomId}`)
 
@@ -57,18 +57,28 @@ io.on('connection', (socket) => {
 
     const users = rooms.get(roomId)!
     const isHost  = users.length === 0
-    const color  = generateColor()
+    
+    const color_key = `room:${roomId}:user:${userId}:color`
+    let color  = await redis.get(color_key) 
+    console.log('color key', color_key, 'color from redis', color)
 
+    if(!color) {
+      color = generateColor()
+      await redis.set(color_key, color, 'EX', ROOM_TTL_SECONDS)
+      console.log('saved color to redis:', color_key, color)  
+    }
+    
     users.push({
       socketId:    socket.id,
-      color,
-      isHost,
-      name,
-      strokeCount: 0,
-      joinedAt:    Date.now()
+      color:         color,
+      isHost:        isHost,
+      name:          name,
+      strokeCount:   0,
+      joinedAt:      Date.now()
     });
     
-    (socket as any).roomId = roomId
+    ;(socket as any).roomId = roomId
+    ;(socket as any).userId = userId
     socket.emit('room-info', { isHost, color })
 
     io.to(roomId).emit('users-update', users.map((u) => ({
@@ -114,6 +124,7 @@ io.on('connection', (socket) => {
     console.log('user disconnected:', socket.id)
 
     const roomId = (socket as any).roomId
+    const userId = (socket as any).userId
     if (!roomId) return
 
     const users = rooms.get(roomId)
@@ -126,13 +137,17 @@ io.on('connection', (socket) => {
     // if the host left, assign host to the next user
     if (users.length > 0 && !users.some((u) => u.isHost)) {
       users[0].isHost = true
-    }
+    } 
 
     // if room is empty clean it up from memory (Redis keeps the strokes)
     if (users.length === 0) {
       rooms.delete(roomId)
       await redis.del(`room:${roomId}:strokes`)
-      
+      const colorKeys = await redis.keys(`room:${roomId}:user:*:color`)
+      if (colorKeys.length > 0) {
+        await redis.del(...colorKeys)
+      }
+
     } else {
       // tell remaining users the updated list
       io.to(roomId).emit('users-update', users.map((u) => ({

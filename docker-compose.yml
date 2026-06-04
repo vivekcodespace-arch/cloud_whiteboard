@@ -26,11 +26,15 @@ services:
         condition: service_healthy                  # wait for redis to start first
 
   frontend:
-    build: ./frontend            # build using frontend/Dockerfile
+    build: 
+      context: ./frontend            # build using frontend/Dockerfile
+      args:
+        - NEXT_PUBLIC_SOCKET_URL=http://localhost:3001  # pass socket URL as build arg
+
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_SOCKET_URL=http://backend:3001   # "backend" = service name
+      - NEXT_PUBLIC_SOCKET_URL=http://localhost:3001  # "backend" = service name
     depends_on:
       - backend                  # wait for backend to start first
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { use, useEffect } from 'react'
 import { getSocket } from '@/lib/socket'
 import { useRoomStore } from '@/store/useRoomStore'
 
@@ -30,7 +30,12 @@ export function useSocket({ onStrokeReceived, onSyncReceived }: UseSocketOptions
     const socket = getSocket()
 
     // tell server which room we want to join
-    socket.emit('join-room', roomId, name)
+    const userId = localStorage.getItem('userId') ?? (() => {
+      const id = crypto.randomUUID()
+      localStorage.setItem('userId', id)
+      return id
+    })()
+    socket.emit('join-room', roomId, name, userId)
 
     // server responds with your role and assigned color
     socket.on('room-info', (data: { isHost: boolean; color: string }) => {
