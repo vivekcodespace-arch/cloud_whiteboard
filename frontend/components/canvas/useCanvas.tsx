@@ -217,23 +217,6 @@ export default function Canvas({ roomId }: { roomId: string }) {
         Undo
       </button>
 
-      <button
-        onClick={copyLink}
-        className={`z-10 absolute top-4 left-4 flex items-center gap-2 px-4 py-2 rounded-3xl w-33 h-8 leading-tight text-sm font-medium transition-all duration-150 cursor-pointer text-[#996515] bg-[#e0e0e0] shadow-[4px_4px_8px_#bebebe,-4px_-4px_8px_#ffffff] hover:shadow-[2px_2px_4px_#bebebe,-2px_-2px_4px_#ffffff] active:shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff]`}
-      >
-        {copied ? (
-          <>
-            <span>✔</span>
-            <span className="text-gray-600">Copied!</span>
-          </>
-        ) : (
-          <>
-            <span>🔗</span>
-            <span>Share room</span>
-          </>
-        )}
-      </button>
-
       <Panel />
     </div>
   )
